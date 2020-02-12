@@ -1,0 +1,308 @@
+	#02 Destructuring
+	Unpacking the array and object elements in easiest way.
+	ref: Reference
+---
+Introduced in ES6
+Destructuring is JS expression that makes it possible to unpack values from arrays, or properties from Objects into distinct variables, That is, we can extract data from arrays and objects and assign them in to variables.
+Before:
+```
+var intro=["hello","i","am","js"];
+var greeting= intro[0];
+var name= intro[3];
+console.log(greeting);   //hello
+console.log(name);       //js
+```
+when  we want to extract data from an array,w e had to do the same thing over and over again.
+ES6 destructuring assignment makes it easier to extract this data.
+BASIC DESTRUCTURING:
+```
+var digits= [1,2,3,4,5];
+var[n1,n2]= digits;
+console.log(n1);          //1
+console.log(n2);          //2
+```
+We can do this type too.
+```
+//simple destructuring
+var[n1,n2]= [1,2,3,4,5];
+console.log(n1);         //1
+console.log(n2);         //2
+```
+Or declare variable before assignments:
+```
+//simple destructuring
+var n1,n2;
+[n1,n2]= [1,2,3,4,5];
+console.log(n1);         //1
+console.log(n2);         //2
+```
+First variable gets first element of array and second element gets second element of array.
+But what if you want to skip some elements:
+```
+var[n1,,,n2]= [1,2,3,4,5];
+console.log(n1);         //1
+console.log(n2);         //4
+```
+n1=> first element of array
+, second element: 2
+,third element: 3
+,forth element :4  which is output.  (works as real separator)
+[So if you want to skip some elements just use comma and enjoy]
+Assign Rest elements of array in one variable:
+```
+var[n1,...n2]= [1,2,3,4,5];
+console.log(n1);      //1
+console.log(n2);      // [2,3,4,5]
+```
+#what to do to do this:   just after comma separator , use three dots ... and see magic.
+As you are looking at above example n2 is having rest elements of array.
+
+We can return an array as use destructuring logic:
+```
+function getNumArray(){
+    return [1,2,3,4,5];
+}
+var[n1,...n2]= getNumArray();
+console.log(n1);    //1
+console.log(n2);    //[2,3,4,5]
+```
+We can also assign default values when using destructuring.
+```
+var [n1=11,n2=12]=[1];
+//n1 and n2 has their own default values
+console.log(n1); // 1
+console.log(n2); //12
+```
+as we can see over here n2 has not any value while assigning that's why it is getting  12 as default be we giving n1 also a default value but, after assigning it is getting 1 not 11.
+Swapping Values using Destructuring Assignment:
+We can use destructuring assignments to swap the values of variables.
+```
+var a=1;
+var b=2;
+[a,b]=[b,a];
+console.log(a);   //2
+console.log(b);   //1 
+```
+Parsing an array returned from an function:
+```
+function f(){
+    return [1,2];
+}
+let a, b;
+[a,b]= f();
+console.log(a);    //1
+console.log(b);    //2
+```
+
+
+#OBJECT DESTRUCTURING
+reffrence
+The destructuring also works with javascript objects.
+```
+//object destructuring
+let option={
+    name:"Vimal",
+    packet: 5,
+    type: "kesar"
+};
+let{name,packet,type}= option;
+console.log(name);       //vimal
+console.log(packet);     //5
+console.log(type);       //kesar
+```
+
+option.name/packet/type assigned with corresponding variables.
+NOTE: variable name should be same.
+What happen when u will type a different variable name:
+```
+//object destructuring
+let option={
+    name:"Vimal",
+    packet: 5,
+    type: "kesar"
+};
+let{xxx,packet,type}= option;
+console.log(xxx);         //undefined
+console.log(packet);      //5
+console.log(type);        //kesar
+```
+NOTE : If we want to assign a property to a variable with another name.
+Use Colon:   
+{ what : goes Where }
+Let's practical on above code and try to change variable name where we want to store that object property.
+```
+//object destructuring
+let option={
+    name:"Vimal",
+    packet: 5,
+    type: "kesar"
+};
+let{name:xxx,packet,type}= option;
+console.log(xxx);   //printed Vimal
+console.log(packet); //5
+console.log(type);   //kesar
+```
+
+now variable xxx has Vimal which is property of name:
+
+One More Example:
+```
+let options = {
+  title: "Menu"
+};
+
+let {width = 100, height = 200, title} = options;
+
+alert(title);  // Menu
+alert(width);  // 100
+alert(height); // 200
+```
+We can also combine colon and equality:
+```
+let data={
+    election:2019,
+    result: "AAP"
+    
+};
+let {name:stateName= "Central Delhi", election:electionYear,result }= data;
+console.log(stateName);   // Central Delhi
+console.log(electionYear); //2019
+console.log(result);      // AAP
+```
+rest parameters:  ...
+```
+let GovtDta ={
+population: "1Billion",
+Prime: "Modi",
+States:28,
+UT:8
+};
+let {population, ...rest} = GovtDta;
+ console.log(population);   // 1Billion
+ console.log(rest);         //{ Prime: 'Modi', States: 28, UT: 8 }
+```
+ to access rest properties:
+```
+ console.log(population);   //1Billion
+ console.log(rest.Prime);   //Modi
+ console.log(rest.States);  //28
+ console.log(rest.UT);      //8
+```
+
+when assigning the object in any variables , don't forget to write type of variable in which u r going to assign.
+NESTED DESTRuCTURING:
+If an array or object contains nested aray and objects , we can use more complex left-side patterns to extract deeper portions.
+```
+//nested destructuring
+let option={
+    size:
+    {
+        height:100,
+        width:50
+    },
+    items: ["cake", "water"],
+    extra:true
+};
+let{
+    size:{
+        width,
+        height
+    },
+    items: [item1,item2],
+    title= "Menu"
+} = option;
+console.log(title);       //Menu
+console.log(width);       //50
+console.log(height);       //100
+console.log(item1);        //cake
+console.log(item2);        //water
+```
+SMART FUNCTION PARAMETERS:
+
+Ref Link to know it, it is very simple. CLICK HERE
+S U M M A R Y: 
+"Destructuring assignment allows for instantly mapping an object or array onto many variables"
+```
+let {prop : varName = default, ...rest} = object
+```
+This means that property prop should go into variable varName and if no such property exists then the default value should be used.
+Object parameters that have no mapping copied to rest  object.
+A SIMPLE EXERCISE QUESTION:
+```
+let user ={
+    name: "prakash Jha",
+    years: 30
+};
+let mynewObj={
+    name,
+    years
+}= user;
+console.log(name);   // prakash jha
+console.log(years);  //30
+```
+
+---
+Object.entries()   click to know more: BTW it returns Object k/v pair into arrays.
+---
+Question: Find out Max person Salary and return his/her name using Object.entries(obj) method .
+My Solution:
+```
+var salaries={
+    "John" :100,
+    "Pete" :300,
+    "Mary" :250
+}
+function topSalary(salaries){
+var mynewObj= {
+    John,
+    Pete,
+    Mary
+}= salaries;
+let MaxSalary= Math.max(John,Pete,Mary);
+// console.log(MaxSalary);
+    
+var PerosonArray = Object.entries(salaries);
+ console.log(PerosonArray);
+ for (let [key,value] of PerosonArray)
+ {
+     if (value==300)
+     console.log(key);                                                //Pete
+ }
+}
+topSalary(salaries);
+```
+Website Solution:
+```
+function topSalary(salaries) {
+
+  let max = 0;
+  let maxName = null;
+
+  for(const [name, salary] of Object.entries(salaries)) {
+    if (max < salary) {
+      max = salary;
+      maxName = name;
+    }
+  }
+
+  return maxName;
+}
+```
+Website Full Solution:
+```
+var salaries={
+    "Ashu" :100,
+    "Abdul" :300,
+    "Asim" :250
+}
+function topSalary(salaries){
+    let max=0;
+    letmaxName= null;
+    for(const[name, salary] of Object.entries(salaries)){
+        if(max<salary)
+        {
+            max= salary;
+            maxName= name;
+        }
+    }
+```
